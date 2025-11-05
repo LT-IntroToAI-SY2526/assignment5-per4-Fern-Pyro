@@ -106,7 +106,20 @@ class Board:
         Returns:
             a tuple of row, column index identifying the most constrained cell
         """
-        pass
+        
+        min_length = 9
+        min_col = 0
+        min_row = 0
+        for row in range(self.size):
+            for col in range(self.size):
+                cell = self.rows[row][col]
+                if isinstance(cell, list): #checks to see if cell is a list
+                    if len(cell) < min_length:
+                        min_length = len(cell)
+                        min_row = row
+                        min_col = col
+        return (min_row, min_col)
+                    
 
     def failure_test(self) -> bool:
         """Check if we've failed to correctly fill out the puzzle. If we find a cell
@@ -139,7 +152,8 @@ class Board:
             column - index of the column to assign
             assignment - value to place at given row, column coordinate
         """
-        pass
+        self.rows[List[row[column]]] = assignment
+
 
 
 def DFS(state: Board) -> Board:
