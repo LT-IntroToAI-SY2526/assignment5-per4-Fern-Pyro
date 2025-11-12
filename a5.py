@@ -142,7 +142,6 @@ class Board:
         #   
         for row in self.rows:
             for cell in row:
-                print(cell)
                 if cell == []:
                     return True
         return False 
@@ -200,7 +199,22 @@ def DFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+
+    stack = Stack([state])
+
+    while not stack.is_empty(): #while stack is not empty
+        current_board : Board = stack.pop()
+        print(current_board)
+        if current_board.goal_test():
+            return current_board
+        row, col = current_board.find_most_constrained_cell() #gets most constrained cell
+        possible_values = current_board.rows[row][col]
+        print(row, col, possible_values)
+        if not current_board.failure_test():
+            for values in possible_values:
+                new_board = copy.deepcopy(current_board)
+                new_board.update(row, col, values)
+                stack.push(new_board)
 
 
 def BFS(state: Board) -> Board:

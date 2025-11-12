@@ -107,5 +107,5 @@ class Queue:
 
         Returns:
             the oldest added element
-        """
-        return self.the_queue.pop(0)
+        """ 
+        return self.the_queue.pop(0) #poping from first index rather than last
