@@ -93,7 +93,7 @@ class Queue:
         """
         return len(self.the_queue) == 0
 
-    def push(self, elt: Q) -> None:
+    def push(self, elt: Q) -> None: #enqueue
         """Add element (elt) to end of queue
 
         Args:
@@ -101,7 +101,7 @@ class Queue:
         """
         self.the_queue.append(elt)
 
-    def pop(self) -> Q:
+    def pop(self) -> Q: #dequeue
         """Remove and return the start of the queue (corresponds to the first item in
         the list)
 

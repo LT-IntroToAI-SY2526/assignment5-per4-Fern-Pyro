@@ -1,6 +1,6 @@
 import copy  # to make a deepcopy of the board
 from typing import List, Any, Tuple
-
+import time
 # import Stack and Queue classes for BFS/DFS
 from stack_and_queue import Stack, Queue
 
@@ -201,15 +201,18 @@ def DFS(state: Board) -> Board:
     """
 
     stack = Stack([state])
+    iter = 0
+    start_time = time.time()
 
     while not stack.is_empty(): #while stack is not empty
+        iter += 1
         current_board : Board = stack.pop()
-        print(current_board)
         if current_board.goal_test():
+            end_time = time.time()
+            print(f"DSF took {iter} interations in {end_time - start_time} seconds to solve the sudoku")
             return current_board
         row, col = current_board.find_most_constrained_cell() #gets most constrained cell
         possible_values = current_board.rows[row][col]
-        print(row, col, possible_values)
         if not current_board.failure_test():
             for values in possible_values:
                 new_board = copy.deepcopy(current_board)
@@ -229,8 +232,25 @@ def BFS(state: Board) -> Board:
     Returns:
         either None in the case of invalid input or a solved board
     """
-    pass
+    queue = Queue([state])
+    #visited = [False] * state.size * state.size + 1
+    iter = 0
+    start_time = time.time()
 
+    while not queue.is_empty():
+        iter += 1
+        current_board: Board = queue.pop()
+        if current_board.goal_test():
+            end_time = time.time()
+            print(f"BFS took {iter} iterations in {end_time - start_time} seconds to solve the sudoku")
+            return current_board
+        row, col = current_board.find_most_constrained_cell()
+        possible_values = current_board.rows[row][col]
+        if not current_board.failure_test():
+            for value in possible_values:
+                new_board = copy.deepcopy(current_board)
+                new_board.update(row, col, value)
+                queue.push(new_board)
 
 if __name__ == "__main__":
     # uncomment the below lines once you've implemented the board class
@@ -348,41 +368,41 @@ if __name__ == "__main__":
     assert b.failure_test() == True, "failure test test 2"
     print("All part 1 tests passed!")
 
-    # ##Now, let's write some quick tests to check update!
-    # #Create a sudoku board.
-    # g = Board()
-    # #Place the 28 assignments in first_moves on the board.
-    # for trip in first_moves:
-    #     g.update(trip[0],trip[1],trip[2])
-    # g.print_pretty()
-    # #From the above print statement, you can see which numbers
-    # #  have been assigned to the board, and then create test
-    # #  cases by looking at the board and listing what values are
-    # #  still possible for a specific cell. I have created
-    # #  2 such test cases like that for you. 
-    # assert g.rows[0][2] == [2,5,6], "update test 1"
-    # assert g.rows[5][5] == [3,7,9], "update test 2"
-    # assert g.num_nums_placed == 28, "update test 3"
-    # assert g.find_most_constrained_cell() == (1,7), "fmc test"
-    # assert g.failure_test() == False, "failure test test"
-    # assert g.goal_test() == False, "goal test test"
-    # g.num_nums_placed = 81
-    # assert g.goal_test() == True, "goal test test"
-    # print("All part 2 tests passed! Testing DFS and BFS next:")
+    ##Now, let's write some quick tests to check update!
+    #Create a sudoku board.
+    g = Board()
+    #Place the 28 assignments in first_moves on the board.
+    for trip in first_moves:
+        g.update(trip[0],trip[1],trip[2])
+    g.print_pretty()
+    #From the above print statement, you can see which numbers
+    #  have been assigned to the board, and then create test
+    #  cases by looking at the board and listing what values are
+    #  still possible for a specific cell. I have created
+    #  2 such test cases like that for you. 
+    assert g.rows[0][2] == [2,5,6], "update test 1"
+    assert g.rows[5][5] == [3,7,9], "update test 2"
+    assert g.num_nums_placed == 28, "update test 3"
+    assert g.find_most_constrained_cell() == (1,7), "fmc test"
+    assert g.failure_test() == False, "failure test test"
+    assert g.goal_test() == False, "goal test test"
+    g.num_nums_placed = 81
+    assert g.goal_test() == True, "goal test test"
+    print("All part 2 tests passed! Testing DFS and BFS next:")
 
-    # print("<<<<<<<<<<<<<< Testing DFS on First Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing DFS on First Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(True, first_moves)
+    test_dfs_or_bfs(True, first_moves)
 
-    # print("<<<<<<<<<<<<<< Testing DFS on Second Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing DFS on Second Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(True, second_moves)
+    test_dfs_or_bfs(True, second_moves)
 
-    # print("<<<<<<<<<<<<<< Testing BFS on First Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing BFS on First Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(False, first_moves)
+    test_dfs_or_bfs(False, first_moves)
 
-    # print("<<<<<<<<<<<<<< Testing BFS on Second Game >>>>>>>>>>>>>>")
+    print("<<<<<<<<<<<<<< Testing BFS on Second Game >>>>>>>>>>>>>>")
 
-    # test_dfs_or_bfs(False, second_moves)
+    test_dfs_or_bfs(False, second_moves)
     pass
