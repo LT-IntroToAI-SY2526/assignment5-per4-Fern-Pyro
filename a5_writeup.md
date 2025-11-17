@@ -30,3 +30,5 @@ I learned about different data structures (stacks and queues)
 I can apply what I learned through this assignment to
 
 3. Explain how the Stack and Queue classes work and why they are important for DFS and BFS algorithms. Describe the difference between LIFO (Last In First Out) and FIFO (First In First Out) data structures. How does using a Stack versus a Queue change the way the search algorithm explores possible solutions? Why is one data structure better suited for depth-first search and the other for breadth-first search?
+
+The Stack and Queue classes initialize a list
